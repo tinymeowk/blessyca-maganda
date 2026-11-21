@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>blesscuit super maganda</title>
+  <style>
+    /* Base font size set to 16px across elements for comfortable reading */
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      /* Soft pastel tint over cute-desk.jpg so text and cards stay easy to read */
+      background-image: linear-gradient(
+          rgba(255, 245, 248, 0.45),
+          rgba(253, 242, 246, 0.45)
+        ),
+        url("cute-desk.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #27272a;
+      font-size: 16px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .header-card {
+      background: #ffffff;
+      border: 1.5px solid #FFC0CB;
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(255, 192, 203, 0.25);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      color: #1f2937;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    /* Two-column layout: Profile on left, Desks / Sub-Desks / Flashcards on right */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    /* Stacks cleanly on smaller screens */
+    @media (max-width: 820px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .box-card {
+      background: #ffffff;
+      border: 1.5px solid #f5c6d2;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 18px rgba(255, 192, 203, 0.2);
+    }
+
+    .box-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-heading {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .helper-text {
+      margin: 0 0 12px;
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    .stack-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .inline-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px;
+    }
+
+    select,
+    input[type="text"],
+    textarea {
+      font-size: 16px;
+      border: 1.5px solid #f0b6c5;
+      border-radius: 10px;
+      background: #fffdfd;
+      color: #1f2937;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    select:focus,
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #ec8ca3;
+      box-shadow: 0 0 0 3px rgba(255, 192, 203, 0.45);
+    }
+
+    select,
+    input[type="text"] {
+      padding: 8px 12px;
+      width: 100%;
+    }
+
+    .inline-controls select,
+    .inline-controls input[type="text"] {
+      width: auto;
+      min-width: 180px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    button.action-btn {
+      padding: 8px 14px;
+      border: 1.5px solid #eda3b8;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      background-color: #FFC0CB;
+      color: #1f2937;
+      transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button.action-btn:hover {
+      background-color: #f7a6b9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(255, 192, 203, 0.45);
+    }
+
+    button.action-btn.secondary {
+      background-color: #ffffff;
+      border-color: #e5d1d8;
+      color: #374151;
+    }
+
+    button.action-btn.secondary:hover {
+      background-color: #fff5f8;
+      border-color: #FFC0CB;
+      box-shadow: none;
+    }
+
+    button.action-btn.danger {
+      background-color: #fff5f5;
+      border-color: #fca5a5;
+      color: #991b1b;
+    }
+
+    button.action-btn.danger:hover {
+      background-color: #fee2e2;
+      border-color: #f87171;
+      box-shadow: none;
+    }
+
+    /* Progress, score & streak display */
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .stat-pill {
+      background: #fff5f8;
+      border: 1px solid #FFC0CB;
+      border-radius: 999px;
+      padding: 5px 14px;
+      color: #374151;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 11px;
+      background: #fce7ee;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #FFC0CB 0%, #f48fb1 100%);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    /* 3D card flip styles */
+    .scene {
+      perspective: 1100px;
+      margin-bottom: 16px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      min-height: 340px;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+    }
+
+    .card-inner.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: relative;
+      width: 100%;
+      min-height: 340px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: #ffffff;
+      border: 2px solid #FFC0CB;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 26px rgba(255, 192, 203, 0.32);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-face::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 18px;
+      right: 18px;
+      height: 5px;
+      background: #FFC0CB;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .card-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: rotateY(180deg);
+    }
+
+    .card-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      color: #6b7280;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #FFC0CB;
+      color: #1f2937;
+    }
+
+    .badge.back {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .question-text {
+      font-weight: 700;
+      line-height: 1.55;
+      margin-bottom: 16px;
+      color: #111827;
+    }
+
+    .choices-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+
+    .choice-btn {
+      width: 100%;
+      text-align: left;
+      padding: 11px 15px;
+      border-radius: 11px;
+      border: 1.5px solid #f4c7d3;
+      background: #fff9fb;
+      color: #1f2937;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .choice-btn:hover:not(:disabled) {
+      background: #ffe6ed;
+      border-color: #FFC0CB;
+      transform: translateY(-1px);
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+    }
+
+    .choice-btn.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #14532d;
+      font-weight: 700;
+    }
+
+    .choice-btn.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #7f1d1d;
+      font-weight: 700;
+    }
+
+    .feedback-note {
+      margin-top: 12px;
+      min-height: 24px;
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .answer-box {
+      font-weight: 700;
+      color: #15803d;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 11px 14px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+
+    .explanation-box {
+      line-height: 1.65;
+      color: #374151;
+      background: #fff9fb;
+      padding: 14px;
+      border-radius: 10px;
+      border-left: 4px solid #FFC0CB;
+    }
+
+    .card-footer-hint {
+      margin-top: 16px;
+      color: #6b7280;
+      text-align: right;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 155px;
+      padding: 12px;
+      margin: 8px 0 12px;
+      font-family: Consolas, Monaco, monospace;
+      resize: vertical;
+    }
+
+    .status-msg {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .status-msg.error {
+      display: block;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+    }
+
+    .status-msg.info {
+      display: block;
+      background: #fff5f8;
+      border: 1px solid #FFC0CB;
+      color: #374151;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Header -->
+    <div class="header-card">
+      <h1 id="appTitle">blesscuit super maganda</h1>
+      <p class="subtitle" id="appSubtitle">top 3 cutei, gusto ko na gumraduate at magpakaprincess, i love my philip</p>
+      <div class="status-msg" id="statusBox"></div>
+    </div>
+
+    <div class="workspace-grid">
+      <!-- LEFT SIDE: Step 1 - Profile selection & management -->
+      <aside class="box-card">
+        <h2 class="section-heading">1. Choose a Profile</h2>
+        <p class="helper-text">Select a profile and click "Choose Profile" to show its desks.</p>
+
+        <div class="stack-controls">
+          <select id="profileSelect"></select>
+          <button type="button" id="chooseProfileBtn" class="action-btn">Choose Profile</button>
+
+          <input type="text" id="profileNameInput" placeholder="New or renamed profile name" />
+          <div class="btn-row">
+            <button type="button" id="addProfileBtn" class="action-btn secondary">+ Add</button>
+            <button type="button" id="renameProfileBtn" class="action-btn secondary">Rename</button>
+            <button type="button" id="deleteProfileBtn" class="action-btn danger">Delete</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT SIDE: Step 2 (Desks) -> Step 3 (Sub-Desks) -> Step 4 (Flashcards) -->
+      <main>
+        <!-- Shown before a profile is chosen -->
+        <div class="box-card" id="noProfileNotice">
+          <h2 class="section-heading">Desks Hidden</h2>
+          <p class="helper-text">Choose a profile on the left first so its desks appear.</p>
+        </div>
+
+        <!-- Step 2: Desk (Shown after choosing a profile) -->
+        <div class="box-card" id="desksSection" style="display: none;">
+          <h2 class="section-heading" id="desksHeading">2. Choose a Desk</h2>
+          <p class="helper-text">Select a desk and click "Choose Desk" to show the desks inside it.</p>
+
+          <div class="inline-controls" style="margin-bottom: 10px;">
+            <select id="deskSelect"></select>
+            <button type="button" id="chooseDeskBtn" class="action-btn">Choose Desk</button>
+          </div>
+
+          <div class="inline-controls">
+            <input type="text" id="deskNameInput" placeholder="New or renamed desk (e.g. Prof Ed)" />
+            <button type="button" id="addDeskBtn" class="action-btn secondary">+ Add Desk</button>
+            <button type="button" id="renameDeskBtn" class="action-btn secondary">Rename Desk</button>
+            <button type="button" id="deleteDeskBtn" class="action-btn danger">Delete Desk</button>
+          </div>
+        </div>
+
+        <!-- Shown after choosing a profile, before choosing a desk -->
+        <div class="box-card" id="noDeskNotice" style="display: none;">
+          <h2 class="section-heading">Inner Desks Hidden</h2>
+          <p class="helper-text">Choose a desk above to see the desks inside it.</p>
+        </div>
+
+        <!-- Step 3: Sub-Desk / Desk inside a Desk (Shown after choosing a desk) -->
+        <div class="box-card" id="subDesksSection" style="display: none;">
+          <h2 class="section-heading" id="subDesksHeading">3. Choose a Desk Inside This Desk</h2>
+          <p class="helper-text">Select an inner desk (topic/chapter) and click "Choose Inner Desk" to show flashcards.</p>
+
+          <div class="inline-controls" style="margin-bottom: 10px;">
+            <select id="subDeskSelect"></select>
+            <button type="button" id="chooseSubDeskBtn" class="action-btn">Choose Inner Desk</button>
+          </div>
+
+          <div class="inline-controls">
+            <input type="text" id="subDeskNameInput" placeholder="New or renamed inner desk (e.g. Module 1)" />
+            <button type="button" id="addSubDeskBtn" class="action-btn secondary">+ Add Inner Desk</button>
+            <button type="button" id="renameSubDeskBtn" class="action-btn secondary">Rename Inner Desk</button>
+            <button type="button" id="deleteSubDeskBtn" class="action-btn danger">Delete Inner Desk</button>
+          </div>
+        </div>
+
+        <!-- Shown after choosing a desk, before choosing an inner desk -->
+        <div class="box-card" id="noSubDeskNotice" style="display: none;">
+          <h2 class="section-heading">Flashcards Hidden</h2>
+          <p class="helper-text">Choose an inner desk above to open its flashcards, score, and JSON loader.</p>
+        </div>
+
+        <!-- Step 4: Flashcards (Shown only after choosing a sub-desk) -->
+        <div id="flashcardsSection" style="display: none;">
+          <div class="box-card">
+            <div class="stats-row">
+              <span class="stat-pill" id="progressText">Card 0 of 0 (0%)</span>
+              <span class="stat-pill" id="scoreText">Score: 0</span>
+              <span class="stat-pill" id="streakText">Streak: 0</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressBar"></div>
+            </div>
+          </div>
+
+          <div class="scene">
+            <div class="card-inner" id="cardInner" title="Click card or Flip Card button to see answer & explanation">
+              <!-- Front: Question + A, B, C, D -->
+              <div class="card-face card-front" id="cardFront">
+                <div>
+                  <div class="card-top-meta">
+                    <span class="badge" id="frontDeskBadge">Question</span>
+                    <span id="frontCounter">0 / 0</span>
+                  </div>
+                  <div class="question-text" id="frontQuestion">No flashcards loaded in this desk yet.</div>
+                  <div class="choices-grid" id="choicesGrid"></div>
+                  <div class="feedback-note" id="feedbackNote">Paste your JSON code below and click Generate Flashcards to begin.</div>
+                </div>
+                <div class="card-footer-hint">Pick a choice or click "Flip Card" for answer &amp; explanation</div>
+              </div>
+
+              <!-- Back: Correct Answer + Explanation -->
+              <div class="card-face card-back" id="cardBack">
+                <div>
+                  <div class="card-top-meta">
+                    <span class="badge back">Answer &amp; Explanation</span>
+                    <span id="backCounter">0 / 0</span>
+                  </div>
+                  <div class="answer-box" id="backAnswer">Correct Answer: -</div>
+                  <div class="explanation-box" id="backExplanation">Flip back to test yourself again.</div>
+                </div>
+                <div class="card-footer-hint">Click card or "Flip Card" to return to question</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" id="prevBtn" class="action-btn secondary">Previous</button>
+            <button type="button" id="flipBtn" class="action-btn">Flip Card</button>
+            <button type="button" id="nextBtn" class="action-btn secondary">Next</button>
+            <button type="button" id="shuffleBtn" class="action-btn secondary">Shuffle</button>
+            <button type="button" id="resetStatsBtn" class="action-btn secondary">Reset Score &amp; Streak</button>
+          </div>
+
+          <div class="box-card" style="margin-top: 18px;">
+            <label for="jsonInput" id="jsonLabel" style="font-weight: 700;">Paste Flashcard JSON Code:</label>
+            <textarea id="jsonInput" placeholder='[
+  {
+    "question": "Which principle emphasizes learning by doing and real-life problem solving?",
+    "choices": {
+      "A": "Essentialism",
+      "B": "Progressivism",
+      "C": "Perennialism",
+      "D": "Existentialism"
+    },
+    "answer": "B",
+    "explanation": "Progressivism centers on active experience and real-world problem solving."
+  }
+]'></textarea>
+
+            <div class="btn-row">
+              <button type="button" id="generateBtn" class="action-btn">Generate Flashcards</button>
+              <button type="button" id="copyDeckBtn" class="action-btn secondary">Copy Deck JSON</button>
+              <button type="button" id="loadSampleBtn" class="action-btn secondary">Load Sample Cards</button>
+              <button type="button" id="clearCardsBtn" class="action-btn secondary">Clear Cards</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Storage key and default labels for the 3-level hierarchy: Profile -> Desk -> Inner Desk
+    const STORAGE_KEY = "blesscuit_flashcard_studio_v4";
+    const DEFAULT_PROFILE_NAME = "My Study Profile";
+    const DEFAULT_DESK_NAME = "Main Desk";
+    const DEFAULT_SUBDESK_NAME = "Inner Desk 1";
+    const POINTS_PER_CORRECT = 10;
+
+    // Optional sample cards available via the "Load Sample Cards" button
+    const SAMPLE_CARDS = [
+      {
+        question: "Which philosophy emphasizes learning by doing and real-world problem solving?",
+        choices: {
+          A: "Essentialism",
+          B: "Progressivism",
+          C: "Perennialism",
+          D: "Existentialism"
+        },
+        answer: "B",
+        explanation: "Progressivism views learners as active participants who learn best through experience, inquiry, and problem solving."
+      },
+      {
+        question: "Which assessment type is conducted during instruction to monitor student learning and give feedback?",
+        choices: {
+          A: "Summative assessment",
+          B: "Diagnostic assessment",
+          C: "Formative assessment",
+          D: "Norm-referenced assessment"
+        },
+        answer: "C",
+        explanation: "Formative assessment happens during the learning process to guide teaching and help learners improve."
+      }
+    ];
+
+    function createSubDeskData(cards = []) {
+      return {
+        cards,
+        currentIndex: 0,
+        score: 0,
+        streak: 0,
+        answeredMap: {}
+      };
+    }
+
+    // Initializes a desk with an empty inner deck ([]) by default
+    function createDeskData(initialSubDeskName = DEFAULT_SUBDESK_NAME, cards = []) {
+      return {
+        chosenSubDesk: null,
+        activeSubDesk: initialSubDeskName,
+        subDesks: {
+          [initialSubDeskName]: createSubDeskData(cards)
+        }
+      };
+    }
+
+    // Initializes a profile with an empty deck ([]) by default
+    function createProfileData(initialDeskName = DEFAULT_DESK_NAME, initialSubDeskName = DEFAULT_SUBDESK_NAME, cards = []) {
+      return {
+        chosenDesk: null,
+        activeDesk: initialDeskName,
+        desks: {
+          [initialDeskName]: createDeskData(initialSubDeskName, cards)
+        }
+      };
+    }
+
+    function loadInitialState() {
+      const fallback = {
+        highlightedProfile: DEFAULT_PROFILE_NAME,
+        chosenProfile: null,
+        profiles: {
+          [DEFAULT_PROFILE_NAME]: createProfileData(DEFAULT_DESK_NAME, DEFAULT_SUBDESK_NAME, [])
+        }
+      };
+
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return fallback;
+        const parsed = JSON.parse(raw);
+        if (!parsed.profiles || typeof parsed.profiles !== "object") return fallback;
+
+        const profileNames = Object.keys(parsed.profiles);
+        if (profileNames.length === 0) return fallback;
+
+        const highlightedProfile = parsed.profiles[parsed.highlightedProfile]
+          ? parsed.highlightedProfile
+          : profileNames[0];
+
+        const chosenProfile =
+          parsed.chosenProfile && parsed.profiles[parsed.chosenProfile]
+            ? parsed.chosenProfile
+            : null;
+
+        profileNames.forEach((pName) => {
+          const prof = parsed.profiles[pName];
+          if (!prof.desks || typeof prof.desks !== "object" || Object.keys(prof.desks).length === 0) {
+            prof.desks = { [DEFAULT_DESK_NAME]: createDeskData(DEFAULT_SUBDESK_NAME, []) };
+            prof.activeDesk = DEFAULT_DESK_NAME;
+          } else if (!prof.desks[prof.activeDesk]) {
+            prof.activeDesk = Object.keys(prof.desks)[0];
+          }
+          if (prof.chosenDesk && !prof.desks[prof.chosenDesk]) {
+            prof.chosenDesk = null;
+          }
+
+          Object.keys(prof.desks).forEach((dName) => {
+            const deskObj = prof.desks[dName];
+            if (!deskObj.subDesks || typeof deskObj.subDesks !== "object" || Object.keys(deskObj.subDesks).length === 0) {
+              deskObj.subDesks = { [DEFAULT_SUBDESK_NAME]: createSubDeskData([]) };
+              deskObj.activeSubDesk = DEFAULT_SUBDESK_NAME;
+            } else if (!deskObj.subDesks[deskObj.activeSubDesk]) {
+              deskObj.activeSubDesk = Object.keys(deskObj.subDesks)[0];
+            }
+            if (deskObj.chosenSubDesk && !deskObj.subDesks[deskObj.chosenSubDesk]) {
+              deskObj.chosenSubDesk = null;
+            }
+          });
+        });
+
+        return {
+          highlightedProfile,
+          chosenProfile,
+          profiles: parsed.profiles
+        };
+      } catch {
+        return fallback;
+      }
+    }
+
+    let appState = loadInitialState();
+    let isFlipped = false;
+
+    function getHighlightedProfile() {
+      return appState.profiles[appState.highlightedProfile];
+    }
+
+    function getActiveDeskObj() {
+      const prof = getHighlightedProfile();
+      const deskName = prof.chosenDesk || prof.activeDesk;
+      return prof.desks[deskName];
+    }
+
+    function getActiveSubDesk() {
+      const deskObj = getActiveDeskObj();
+      const subName = deskObj.chosenSubDesk || deskObj.activeSubDesk;
+      const subDesk = deskObj.subDesks[subName];
+      if (!subDesk.answeredMap) subDesk.answeredMap = {};
+      return subDesk;
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+    }
+
+    function escapeHTML(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // DOM element references
+    const profileSelect = document.getElementById("profileSelect");
+    const chooseProfileBtn = document.getElementById("chooseProfileBtn");
+    const profileNameInput = document.getElementById("profileNameInput");
+    const addProfileBtn = document.getElementById("addProfileBtn");
+    const renameProfileBtn = document.getElementById("renameProfileBtn");
+    const deleteProfileBtn = document.getElementById("deleteProfileBtn");
+
+    const noProfileNotice = document.getElementById("noProfileNotice");
+    const desksSection = document.getElementById("desksSection");
+    const desksHeading = document.getElementById("desksHeading");
+    const deskSelect = document.getElementById("deskSelect");
+    const chooseDeskBtn = document.getElementById("chooseDeskBtn");
+    const deskNameInput = document.getElementById("deskNameInput");
+    const addDeskBtn = document.getElementById("addDeskBtn");
+    const renameDeskBtn = document.getElementById("renameDeskBtn");
+    const deleteDeskBtn = document.getElementById("deleteDeskBtn");
+
+    const noDeskNotice = document.getElementById("noDeskNotice");
+    const subDesksSection = document.getElementById("subDesksSection");
+    const subDesksHeading = document.getElementById("subDesksHeading");
+    const subDeskSelect = document.getElementById("subDeskSelect");
+    const chooseSubDeskBtn = document.getElementById("chooseSubDeskBtn");
+    const subDeskNameInput = document.getElementById("subDeskNameInput");
+    const addSubDeskBtn = document.getElementById("addSubDeskBtn");
+    const renameSubDeskBtn = document.getElementById("renameSubDeskBtn");
+    const deleteSubDeskBtn = document.getElementById("deleteSubDeskBtn");
+
+    const noSubDeskNotice = document.getElementById("noSubDeskNotice");
+    const flashcardsSection = document.getElementById("flashcardsSection");
+
+    const statusBox = document.getElementById("statusBox");
+    const jsonLabel = document.getElementById("jsonLabel");
+
+    const progressText = document.getElementById("progressText");
+    const scoreText = document.getElementById("scoreText");
+    const streakText = document.getElementById("streakText");
+    const progressBar = document.getElementById("progressBar");
+
+    const cardInner = document.getElementById("cardInner");
+    const frontDeskBadge = document.getElementById("frontDeskBadge");
+    const frontCounter = document.getElementById("frontCounter");
+    const backCounter = document.getElementById("backCounter");
+    const frontQuestion = document.getElementById("frontQuestion");
+    const choicesGrid = document.getElementById("choicesGrid");
+    const feedbackNote = document.getElementById("feedbackNote");
+    const backAnswer = document.getElementById("backAnswer");
+    const backExplanation = document.getElementById("backExplanation");
+
+    const prevBtn = document.getElementById("prevBtn");
+    const flipBtn = document.getElementById("flipBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+    const resetStatsBtn = document.getElementById("resetStatsBtn");
+
+    const jsonInput = document.getElementById("jsonInput");
+    const generateBtn = document.getElementById("generateBtn");
+    const copyDeckBtn = document.getElementById("copyDeckBtn");
+    const loadSampleBtn = document.getElementById("loadSampleBtn");
+    const clearCardsBtn = document.getElementById("clearCardsBtn");
+
+    function showStatus(msg, type = "info") {
+      statusBox.textContent = msg;
+      statusBox.className = `status-msg ${type}`;
+    }
+
+    function clearStatus() {
+      statusBox.textContent = "";
+      statusBox.className = "status-msg";
+    }
+
+    function renderProfileDropdown() {
+      const names = Object.keys(appState.profiles);
+      profileSelect.innerHTML = names
+        .map(
+          (name) =>
+            `<option value="${escapeHTML(name)}" ${
+              name === appState.highlightedProfile ? "selected" : ""
+            }>${escapeHTML(name)}</option>`
+        )
+        .join("");
+    }
+
+    function renderDeskDropdown() {
+      const prof = getHighlightedProfile();
+      const deskNames = Object.keys(prof.desks);
+      deskSelect.innerHTML = deskNames
+        .map(
+          (name) =>
+            `<option value="${escapeHTML(name)}" ${
+              name === prof.activeDesk ? "selected" : ""
+            }>${escapeHTML(name)}</option>`
+        )
+        .join("");
+    }
+
+    function renderSubDeskDropdown() {
+      const deskObj = getActiveDeskObj();
+      const subNames = Object.keys(deskObj.subDesks);
+      subDeskSelect.innerHTML = subNames
+        .map(
+          (name) =>
+            `<option value="${escapeHTML(name)}" ${
+              name === deskObj.activeSubDesk ? "selected" : ""
+            }>${escapeHTML(name)}</option>`
+        )
+        .join("");
+    }
+
+    function updateStepVisibility() {
+      const hasChosenProfile =
+        Boolean(appState.chosenProfile) &&
+        appState.chosenProfile === appState.highlightedProfile &&
+        Boolean(appState.profiles[appState.chosenProfile]);
+
+      if (!hasChosenProfile) {
+        noProfileNotice.style.display = "block";
+        desksSection.style.display = "none";
+        noDeskNotice.style.display = "none";
+        subDesksSection.style.display = "none";
+        noSubDeskNotice.style.display = "none";
+        flashcardsSection.style.display = "none";
+        return;
+      }
+
+      noProfileNotice.style.display = "none";
+      desksSection.style.display = "block";
+      desksHeading.textContent = `2. Choose a Desk in "${appState.chosenProfile}"`;
+
+      const prof = getHighlightedProfile();
+      const hasChosenDesk =
+        Boolean(prof.chosenDesk) &&
+        prof.chosenDesk === prof.activeDesk &&
+        Boolean(prof.desks[prof.chosenDesk]);
+
+      if (!hasChosenDesk) {
+        noDeskNotice.style.display = "block";
+        subDesksSection.style.display = "none";
+        noSubDeskNotice.style.display = "none";
+        flashcardsSection.style.display = "none";
+        return;
+      }
+
+      noDeskNotice.style.display = "none";
+      subDesksSection.style.display = "block";
+      subDesksHeading.textContent = `3. Choose a Desk Inside "${prof.chosenDesk}"`;
+
+      const deskObj = getActiveDeskObj();
+      const hasChosenSubDesk =
+        Boolean(deskObj.chosenSubDesk) &&
+        deskObj.chosenSubDesk === deskObj.activeSubDesk &&
+        Boolean(deskObj.subDesks[deskObj.chosenSubDesk]);
+
+      if (!hasChosenSubDesk) {
+        noSubDeskNotice.style.display = "block";
+        flashcardsSection.style.display = "none";
+      } else {
+        noSubDeskNotice.style.display = "none";
+        flashcardsSection.style.display = "block";
+        syncSubDeskView();
+      }
+    }
+
+    function updateStatsUI() {
+      const subDesk = getActiveSubDesk();
+      const total = subDesk.cards.length;
+      const currentNum = total === 0 ? 0 : subDesk.currentIndex + 1;
+      const pct = total === 0 ? 0 : Math.round((currentNum / total) * 100);
+
+      progressText.textContent = `Card ${currentNum} of ${total} (${pct}%)`;
+      scoreText.textContent = `Score: ${subDesk.score}`;
+      streakText.textContent = `Streak: ${subDesk.streak}`;
+      progressBar.style.width = `${pct}%`;
+    }
+
+    function handleChoiceClick(letter) {
+      const subDesk = getActiveSubDesk();
+      const card = subDesk.cards[subDesk.currentIndex];
+      if (!card || subDesk.answeredMap[subDesk.currentIndex]) return;
+
+      const correctLetter = String(card.answer || "").trim().toUpperCase();
+      const chosenLetter = String(letter).toUpperCase();
+      const isCorrect = chosenLetter === correctLetter;
+
+      subDesk.answeredMap[subDesk.currentIndex] = chosenLetter;
+
+      if (isCorrect) {
+        subDesk.score += POINTS_PER_CORRECT;
+        subDesk.streak += 1;
+        feedbackNote.textContent = `Nice! ${chosenLetter} is correct (+${POINTS_PER_CORRECT} pts).`;
+      } else {
+        subDesk.streak = 0;
+        feedbackNote.textContent = `You picked ${chosenLetter}. Correct answer is ${correctLetter}.`;
+      }
+
+      saveState();
+      updateStatsUI();
+      renderCard();
+    }
+
+    function renderCard() {
+      const prof = getHighlightedProfile();
+      const deskName = prof.chosenDesk || prof.activeDesk;
+      const deskObj = getActiveDeskObj();
+      const subDeskName = deskObj.chosenSubDesk || deskObj.activeSubDesk;
+      const subDesk = getActiveSubDesk();
+      const total = subDesk.cards.length;
+
+      cardInner.classList.toggle("is-flipped", isFlipped);
+      frontDeskBadge.textContent = `${deskName} • ${subDeskName}`;
+      jsonLabel.textContent = `Paste Flashcard JSON Code for "${appState.highlightedProfile} → ${deskName} → ${subDeskName}":`;
+      updateStatsUI();
+
+      if (total === 0) {
+        frontCounter.textContent = "0 / 0";
+        backCounter.textContent = "0 / 0";
+        frontQuestion.textContent = `No flashcards in "${subDeskName}" yet.`;
+        choicesGrid.innerHTML = "";
+        feedbackNote.textContent = "Paste JSON flashcard code below and click Generate Flashcards.";
+        backAnswer.textContent = "Correct Answer: -";
+        backExplanation.textContent = "Load or generate flashcards to view explanations.";
+        return;
+      }
+
+      if (subDesk.currentIndex >= total) {
+        subDesk.currentIndex = 0;
+      }
+
+      const card = subDesk.cards[subDesk.currentIndex];
+      const counterLabel = `${subDesk.currentIndex + 1} / ${total}`;
+      frontCounter.textContent = counterLabel;
+      backCounter.textContent = counterLabel;
+
+      frontQuestion.textContent = card.question;
+
+      const selectedChoice = subDesk.answeredMap[subDesk.currentIndex] || null;
+      const correctLetter = String(card.answer || "").trim().toUpperCase();
+      const letters = ["A", "B", "C", "D"];
+
+      choicesGrid.innerHTML = letters
+        .map((letter) => {
+          const text = card.choices?.[letter] ?? "";
+          let stateClass = "";
+          if (selectedChoice) {
+            if (letter === correctLetter) {
+              stateClass = "correct";
+            } else if (letter === selectedChoice && letter !== correctLetter) {
+              stateClass = "wrong";
+            }
+          }
+          const disabledAttr = selectedChoice ? "disabled" : "";
+          return `
+            <button
+              type="button"
+              class="choice-btn ${stateClass}"
+              data-choice="${letter}"
+              ${disabledAttr}
+            >
+              <strong>${letter}.</strong> ${escapeHTML(text)}
+            </button>
+          `;
+        })
+        .join("");
+
+      choicesGrid.querySelectorAll(".choice-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          handleChoiceClick(btn.getAttribute("data-choice"));
+        });
+      });
+
+      if (!selectedChoice) {
+        feedbackNote.textContent = "Select A, B, C, or D to test yourself.";
+      } else if (selectedChoice === correctLetter) {
+        feedbackNote.textContent = `Correct (${correctLetter})! Flip card to read explanation.`;
+      } else {
+        feedbackNote.textContent = `Incorrect (${selectedChoice}). Correct answer: ${correctLetter}.`;
+      }
+
+      backAnswer.textContent = `Correct Answer: ${correctLetter || "N/A"}`;
+      backExplanation.textContent = card.explanation || "No explanation provided.";
+    }
+
+    function syncSubDeskView() {
+      const subDesk = getActiveSubDesk();
+      jsonInput.value = subDesk.cards.length ? JSON.stringify(subDesk.cards, null, 2) : "";
+      isFlipped = false;
+      renderCard();
+    }
+
+    // Level 1: Profile events
+    profileSelect.addEventListener("change", () => {
+      appState.highlightedProfile = profileSelect.value;
+      if (appState.chosenProfile !== appState.highlightedProfile) {
+        appState.chosenProfile = null;
+      }
+      saveState();
+      clearStatus();
+      renderDeskDropdown();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+    });
+
+    chooseProfileBtn.addEventListener("click", () => {
+      appState.chosenProfile = profileSelect.value;
+      appState.highlightedProfile = profileSelect.value;
+      const prof = getHighlightedProfile();
+      prof.chosenDesk = null;
+      saveState();
+      renderDeskDropdown();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Opened profile "${appState.chosenProfile}". Now choose a desk.`, "info");
+    });
+
+    addProfileBtn.addEventListener("click", () => {
+      const name = profileNameInput.value.trim();
+      if (!name) {
+        showStatus("Enter a profile name first.", "error");
+        return;
+      }
+      if (appState.profiles[name]) {
+        showStatus(`Profile "${name}" already exists.`, "error");
+        return;
+      }
+      appState.profiles[name] = createProfileData(DEFAULT_DESK_NAME, DEFAULT_SUBDESK_NAME, []);
+      appState.highlightedProfile = name;
+      appState.chosenProfile = null;
+      profileNameInput.value = "";
+      saveState();
+      renderProfileDropdown();
+      renderDeskDropdown();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Added profile "${name}". Click "Choose Profile" to view its desks.`, "info");
+    });
+
+    renameProfileBtn.addEventListener("click", () => {
+      const newName = profileNameInput.value.trim();
+      if (!newName) {
+        showStatus("Type the new profile name first.", "error");
+        return;
+      }
+      const oldName = appState.highlightedProfile;
+      if (newName === oldName) {
+        showStatus("That is already the selected profile name.", "error");
+        return;
+      }
+      if (appState.profiles[newName]) {
+        showStatus(`Profile "${newName}" already exists.`, "error");
+        return;
+      }
+
+      const rebuilt = {};
+      Object.keys(appState.profiles).forEach((key) => {
+        rebuilt[key === oldName ? newName : key] = appState.profiles[key];
+      });
+      appState.profiles = rebuilt;
+      appState.highlightedProfile = newName;
+      if (appState.chosenProfile === oldName) {
+        appState.chosenProfile = newName;
+      }
+      profileNameInput.value = "";
+      saveState();
+      renderProfileDropdown();
+      updateStepVisibility();
+      showStatus(`Renamed profile "${oldName}" to "${newName}".`, "info");
+    });
+
+    deleteProfileBtn.addEventListener("click", () => {
+      const targetName = appState.highlightedProfile;
+      delete appState.profiles[targetName];
+
+      const remaining = Object.keys(appState.profiles);
+      if (remaining.length === 0) {
+        appState.profiles[DEFAULT_PROFILE_NAME] = createProfileData(DEFAULT_DESK_NAME, DEFAULT_SUBDESK_NAME, []);
+        appState.highlightedProfile = DEFAULT_PROFILE_NAME;
+      } else {
+        appState.highlightedProfile = remaining[0];
+      }
+
+      if (appState.chosenProfile === targetName) {
+        appState.chosenProfile = null;
+      }
+
+      saveState();
+      renderProfileDropdown();
+      renderDeskDropdown();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Deleted profile "${targetName}".`, "info");
+    });
+
+    // Level 2: Desk events
+    deskSelect.addEventListener("change", () => {
+      const prof = getHighlightedProfile();
+      prof.activeDesk = deskSelect.value;
+      if (prof.chosenDesk !== prof.activeDesk) {
+        prof.chosenDesk = null;
+      }
+      saveState();
+      clearStatus();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+    });
+
+    chooseDeskBtn.addEventListener("click", () => {
+      const prof = getHighlightedProfile();
+      prof.activeDesk = deskSelect.value;
+      prof.chosenDesk = deskSelect.value;
+      const deskObj = getActiveDeskObj();
+      deskObj.chosenSubDesk = null;
+      saveState();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Opened desk "${prof.chosenDesk}". Now choose a desk inside it.`, "info");
+    });
+
+    addDeskBtn.addEventListener("click", () => {
+      const deskName = deskNameInput.value.trim();
+      if (!deskName) {
+        showStatus("Enter a desk name first.", "error");
+        return;
+      }
+      const prof = getHighlightedProfile();
+      if (prof.desks[deskName]) {
+        showStatus(`Desk "${deskName}" already exists.`, "error");
+        return;
+      }
+      prof.desks[deskName] = createDeskData(DEFAULT_SUBDESK_NAME, []);
+      prof.activeDesk = deskName;
+      prof.chosenDesk = null;
+      deskNameInput.value = "";
+      saveState();
+      renderDeskDropdown();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Added desk "${deskName}". Click "Choose Desk" to view inner desks.`, "info");
+    });
+
+    renameDeskBtn.addEventListener("click", () => {
+      const newDeskName = deskNameInput.value.trim();
+      if (!newDeskName) {
+        showStatus("Type the new desk name first.", "error");
+        return;
+      }
+      const prof = getHighlightedProfile();
+      const oldDeskName = prof.activeDesk;
+      if (newDeskName === oldDeskName) {
+        showStatus("That is already the selected desk name.", "error");
+        return;
+      }
+      if (prof.desks[newDeskName]) {
+        showStatus(`Desk "${newDeskName}" already exists in this profile.`, "error");
+        return;
+      }
+
+      const rebuiltDesks = {};
+      Object.keys(prof.desks).forEach((key) => {
+        rebuiltDesks[key === oldDeskName ? newDeskName : key] = prof.desks[key];
+      });
+      prof.desks = rebuiltDesks;
+      prof.activeDesk = newDeskName;
+      if (prof.chosenDesk === oldDeskName) {
+        prof.chosenDesk = newDeskName;
+      }
+      deskNameInput.value = "";
+      saveState();
+      renderDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Renamed desk "${oldDeskName}" to "${newDeskName}".`, "info");
+    });
+
+    deleteDeskBtn.addEventListener("click", () => {
+      const prof = getHighlightedProfile();
+      const targetDesk = prof.activeDesk;
+      delete prof.desks[targetDesk];
+
+      const remainingDesks = Object.keys(prof.desks);
+      if (remainingDesks.length === 0) {
+        prof.desks[DEFAULT_DESK_NAME] = createDeskData(DEFAULT_SUBDESK_NAME, []);
+        prof.activeDesk = DEFAULT_DESK_NAME;
+      } else {
+        prof.activeDesk = remainingDesks[0];
+      }
+
+      if (prof.chosenDesk === targetDesk) {
+        prof.chosenDesk = null;
+      }
+
+      saveState();
+      renderDeskDropdown();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Deleted desk "${targetDesk}".`, "info");
+    });
+
+    // Level 3: Sub-Desk (desk inside a desk) events
+    subDeskSelect.addEventListener("change", () => {
+      const deskObj = getActiveDeskObj();
+      deskObj.activeSubDesk = subDeskSelect.value;
+      if (deskObj.chosenSubDesk !== deskObj.activeSubDesk) {
+        deskObj.chosenSubDesk = null;
+      }
+      saveState();
+      clearStatus();
+      updateStepVisibility();
+    });
+
+    chooseSubDeskBtn.addEventListener("click", () => {
+      const deskObj = getActiveDeskObj();
+      deskObj.activeSubDesk = subDeskSelect.value;
+      deskObj.chosenSubDesk = subDeskSelect.value;
+      saveState();
+      updateStepVisibility();
+      showStatus(`Opened inner desk "${deskObj.chosenSubDesk}".`, "info");
+    });
+
+    addSubDeskBtn.addEventListener("click", () => {
+      const subName = subDeskNameInput.value.trim();
+      if (!subName) {
+        showStatus("Enter an inner desk name first.", "error");
+        return;
+      }
+      const deskObj = getActiveDeskObj();
+      if (deskObj.subDesks[subName]) {
+        showStatus(`Inner desk "${subName}" already exists.`, "error");
+        return;
+      }
+      deskObj.subDesks[subName] = createSubDeskData([]);
+      deskObj.activeSubDesk = subName;
+      deskObj.chosenSubDesk = null;
+      subDeskNameInput.value = "";
+      saveState();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Added inner desk "${subName}". Click "Choose Inner Desk" to view flashcards.`, "info");
+    });
+
+    renameSubDeskBtn.addEventListener("click", () => {
+      const newSubName = subDeskNameInput.value.trim();
+      if (!newSubName) {
+        showStatus("Type the new inner desk name first.", "error");
+        return;
+      }
+      const deskObj = getActiveDeskObj();
+      const oldSubName = deskObj.activeSubDesk;
+      if (newSubName === oldSubName) {
+        showStatus("That is already the selected inner desk name.", "error");
+        return;
+      }
+      if (deskObj.subDesks[newSubName]) {
+        showStatus(`Inner desk "${newSubName}" already exists.`, "error");
+        return;
+      }
+
+      const rebuiltSub = {};
+      Object.keys(deskObj.subDesks).forEach((key) => {
+        rebuiltSub[key === oldSubName ? newSubName : key] = deskObj.subDesks[key];
+      });
+      deskObj.subDesks = rebuiltSub;
+      deskObj.activeSubDesk = newSubName;
+      if (deskObj.chosenSubDesk === oldSubName) {
+        deskObj.chosenSubDesk = newSubName;
+      }
+      subDeskNameInput.value = "";
+      saveState();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Renamed inner desk "${oldSubName}" to "${newSubName}".`, "info");
+    });
+
+    deleteSubDeskBtn.addEventListener("click", () => {
+      const deskObj = getActiveDeskObj();
+      const targetSub = deskObj.activeSubDesk;
+      delete deskObj.subDesks[targetSub];
+
+      const remainingSub = Object.keys(deskObj.subDesks);
+      if (remainingSub.length === 0) {
+        deskObj.subDesks[DEFAULT_SUBDESK_NAME] = createSubDeskData([]);
+        deskObj.activeSubDesk = DEFAULT_SUBDESK_NAME;
+      } else {
+        deskObj.activeSubDesk = remainingSub[0];
+      }
+
+      if (deskObj.chosenSubDesk === targetSub) {
+        deskObj.chosenSubDesk = null;
+      }
+
+      saveState();
+      renderSubDeskDropdown();
+      updateStepVisibility();
+      showStatus(`Deleted inner desk "${targetSub}".`, "info");
+    });
+
+    // Flip, navigation, shuffle & reset events
+    function toggleFlip() {
+      const subDesk = getActiveSubDesk();
+      if (subDesk.cards.length === 0) return;
+      isFlipped = !isFlipped;
+      cardInner.classList.toggle("is-flipped", isFlipped);
+    }
+
+    cardInner.addEventListener("click", toggleFlip);
+    flipBtn.addEventListener("click", toggleFlip);
+
+    nextBtn.addEventListener("click", () => {
+      const subDesk = getActiveSubDesk();
+      if (subDesk.cards.length === 0) return;
+      subDesk.currentIndex = (subDesk.currentIndex + 1) % subDesk.cards.length;
+      isFlipped = false;
+      saveState();
+      renderCard();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      const subDesk = getActiveSubDesk();
+      if (subDesk.cards.length === 0) return;
+      subDesk.currentIndex = (subDesk.currentIndex - 1 + subDesk.cards.length) % subDesk.cards.length;
+      isFlipped = false;
+      saveState();
+      renderCard();
+    });
+
+    shuffleBtn.addEventListener("click", () => {
+      const subDesk = getActiveSubDesk();
+      if (subDesk.cards.length < 2) return;
+      for (let i = subDesk.cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [subDesk.cards[i], subDesk.cards[j]] = [subDesk.cards[j], subDesk.cards[i]];
+      }
+      subDesk.currentIndex = 0;
+      subDesk.answeredMap = {};
+      isFlipped = false;
+      saveState();
+      renderCard();
+    });
+
+    resetStatsBtn.addEventListener("click", () => {
+      const subDesk = getActiveSubDesk();
+      subDesk.score = 0;
+      subDesk.streak = 0;
+      subDesk.answeredMap = {};
+      isFlipped = false;
+      saveState();
+      renderCard();
+    });
+
+    function applyCardsToActiveSubDesk(cardsArray) {
+      if (!Array.isArray(cardsArray) || cardsArray.length === 0) {
+        throw new Error("Please provide a non-empty JSON array [ ... ].");
+      }
+
+      const normalized = cardsArray.map((item, idx) => {
+        if (!item || typeof item.question !== "string" || !item.choices) {
+          throw new Error(`Card #${idx + 1} needs both "question" and "choices".`);
+        }
+        return {
+          question: item.question,
+          choices: {
+            A: item.choices.A ?? "",
+            B: item.choices.B ?? "",
+            C: item.choices.C ?? "",
+            D: item.choices.D ?? ""
+          },
+          answer: String(item.answer ?? "A").trim().toUpperCase(),
+          explanation: item.explanation ?? "No explanation provided."
+        };
+      });
+
+      const subDesk = getActiveSubDesk();
+      subDesk.cards = normalized;
+      subDesk.currentIndex = 0;
+      subDesk.score = 0;
+      subDesk.streak = 0;
+      subDesk.answeredMap = {};
+      isFlipped = false;
+
+      saveState();
+      clearStatus();
+      renderCard();
+    }
+
+    generateBtn.addEventListener("click", () => {
+      try {
+        const raw = jsonInput.value.trim();
+        if (!raw) throw new Error("Paste your JSON flashcard code first.");
+        const parsed = JSON.parse(raw);
+        applyCardsToActiveSubDesk(parsed);
+      } catch (err) {
+        showStatus("Could not generate flashcards: " + err.message, "error");
+      }
+    });
+
+    copyDeckBtn.addEventListener("click", () => {
+      const subDesk = getActiveSubDesk();
+      if (!subDesk.cards || subDesk.cards.length === 0) {
+        showStatus("No flashcards in this inner desk to copy.", "error");
+        return;
+      }
+      const formatted = JSON.stringify(subDesk.cards, null, 2);
+      jsonInput.value = formatted;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(formatted).then(
+          () => showStatus("Copied active inner desk JSON to your clipboard!", "info"),
+          () => showStatus("Deck JSON placed in the box—select all and copy.", "info")
+        );
+      } else {
+        showStatus("Deck JSON placed in the box—select all and copy.", "info");
+      }
+    });
+
+    loadSampleBtn.addEventListener("click", () => {
+      jsonInput.value = JSON.stringify(SAMPLE_CARDS, null, 2);
+      applyCardsToActiveSubDesk(SAMPLE_CARDS);
+    });
+
+    clearCardsBtn.addEventListener("click", () => {
+      const subDesk = getActiveSubDesk();
+      subDesk.cards = [];
+      subDesk.currentIndex = 0;
+      subDesk.score = 0;
+      subDesk.streak = 0;
+      subDesk.answeredMap = {};
+      jsonInput.value = "";
+      isFlipped = false;
+      saveState();
+      clearStatus();
+      renderCard();
+    });
+
+    // Initialize UI on load
+    renderProfileDropdown();
+    renderDeskDropdown();
+    renderSubDeskDropdown();
+    updateStepVisibility();
+  </script>
+</body>
+</html>
